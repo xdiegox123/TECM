@@ -1,0 +1,53 @@
+@startuml MachineLearning, Inc.
+
+package "src.core.utils" {
+    class splitedData {
+        - float[] trainIndependentlyX
+        - float[] trainDependentlyY
+        - float[] testIndependentlyX
+        - float[] testDependentlyY
+        + float[] getTrainIndependentlyX()
+        + void setTrainIndependentlyX(float[] trainIndependentlyX)
+        + float[] getTrainDependentlyY()
+        + void setTrainDependentlyY(float[] trainDependentlyY)
+        + float[] getTestIndependentlyX()
+        + void setTestIndependentlyX(float[] testIndependentlyX)
+        + float[] getTestDependentlyY()
+        + void setTestDependentlyY(float[] testDependentlyY)
+    }
+
+    class splitingData {
+        - float[] independentlyX
+        - float[] dependentlyY
+        - float trainPercent
+        + splitingData(float[] independentlyX, float[] dependentlyY, float trainPercent)
+        + splitedData split(int mode)
+        - splitedData secuential(int range)
+        - splitedData random(int range)
+        - splitedData splitIntercalated(int range)
+    }
+
+    splitedData "1" *-- "0..1" splitingData : splits
+}
+package "src.interfaces.metrics" {
+    interface coefficientDetermination {
+        + float calculate(float[] y, float[] y_pred, float[] y_mean)
+    }
+
+    interface coefficentCorrelation {
+        + float calculatePearson(float[] x, float[] y)
+    }
+}
+
+package "src.core.metrics" {
+    class coefficientofDetermination implements coefficientDetermination {
+        + float calculate(float[] y, float[] y_pred, float[] y_mean)
+    }
+
+    class coefficentofCorrelation implements coefficentCorrelation {
+        + float calculatePearson(float[] x, float[] y)
+    }
+}
+
+
+@enduml
