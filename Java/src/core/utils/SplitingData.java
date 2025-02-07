@@ -64,7 +64,8 @@ public class SplitingData {
             case 2:
                 return splitIntercalated(trainSize);
             default:
-                throw new IllegalArgumentException("Invalid mode. Use 0 for sequential, 1 for random or 2 for Intercalated.");
+                throw new IllegalArgumentException(
+                        "Invalid mode. Use 0 for sequential, 1 for random or 2 for Intercalated.");
         }
     }
 
@@ -114,8 +115,7 @@ public class SplitingData {
         SplittedData splitedData = new SplittedData();
         Random rand = new Random();
         HashSet<Integer> selectedSet = new HashSet<>();
-        int auxIndex = 0;
-        int[] selectedIndices = new int[range];
+        int testIndex = 0, trainingIndex = 0;
         float[] selecteIndependentlydTestData = new float[range];
         float[] selecteDependentlydTestData = new float[range];
         float[] selecteIndependentlydTrainingData = new float[independentlyX.length - (range - 1)];
@@ -124,21 +124,20 @@ public class SplitingData {
         for (int i = 0; i < range; i++) {
             int possibleIndex;
             do {
-                possibleIndex = rand.nextInt(dependentlyY.length );
+                possibleIndex = rand.nextInt(dependentlyY.length);
             } while (selectedSet.contains(possibleIndex));
-
-            selectedIndices[i] = possibleIndex;
             selectedSet.add(possibleIndex);
         }
 
         for (int i = 0; i < dependentlyY.length; i++) {
-            if (selectedIndices[auxIndex] == i) {
-                selecteIndependentlydTestData[auxIndex] = independentlyX[i];
-                selecteDependentlydTestData[auxIndex] = dependentlyY[i];
-                auxIndex++;
+            if (selectedSet.contains(i)) {
+                selecteIndependentlydTestData[testIndex] = independentlyX[i];
+                selecteDependentlydTestData[testIndex] = dependentlyY[i];
+                testIndex++;
             } else {
-                selecteIndependentlydTrainingData[i] = independentlyX[i];
-                selecteDependentlydTrainingData[i] = dependentlyY[i];
+                selecteIndependentlydTrainingData[trainingIndex] = independentlyX[i];
+                selecteDependentlydTrainingData[trainingIndex] = dependentlyY[i];
+                trainingIndex++;
             }
         }
         splitedData.setTrainIndependentlyX(selecteIndependentlydTrainingData);
@@ -160,8 +159,8 @@ public class SplitingData {
 
     private SplittedData splitIntercalated(int range) {
         SplittedData splitedData = new SplittedData();
-        int auxIndex = 0;
-        int[] selectedIndices = new int[range];
+        HashSet<Integer> selectedSet = new HashSet<>();
+        int testIndex = 0, trainingIndex = 0;
         float[] selecteIndependentlydTestData = new float[range];
         float[] selecteDependentlydTestData = new float[range];
         float[] selecteIndependentlydTrainingData = new float[independentlyX.length - (range - 1)];
@@ -169,17 +168,18 @@ public class SplitingData {
         int interval = independentlyX.length / range;
 
         for (int i = 0; i < range; i++) {
-            selectedIndices[i] = (i * interval) + interval / 2;
+            selectedSet.add((i * interval) + interval / 2);
         }
 
         for (int i = 0; i < dependentlyY.length; i++) {
-            if (selectedIndices[auxIndex] == i) {
-                selecteIndependentlydTestData[auxIndex] = independentlyX[i];
-                selecteDependentlydTestData[auxIndex] = dependentlyY[i];
-                auxIndex++;
+            if (selectedSet.contains(i)) {
+                selecteIndependentlydTestData[testIndex] = independentlyX[i];
+                selecteDependentlydTestData[testIndex] = dependentlyY[i];
+                testIndex++;
             } else {
-                selecteIndependentlydTrainingData[i] = independentlyX[i];
-                selecteDependentlydTrainingData[i] = dependentlyY[i];
+                selecteIndependentlydTrainingData[trainingIndex] = independentlyX[i];
+                selecteDependentlydTrainingData[trainingIndex] = dependentlyY[i];
+                trainingIndex++;
             }
         }
         splitedData.setTrainIndependentlyX(selecteIndependentlydTrainingData);
