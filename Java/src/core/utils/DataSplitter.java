@@ -3,17 +3,17 @@ package src.core.utils;
 import java.util.HashSet;
 import java.util.Random;
 
+import src.core.utils.dtos.SplitDataResult;
+
 /**
- * La clase `splitingData` es responsable de dividir un conjunto de datos dado
- * de variables independientes y dependientes
- * en conjuntos de entrenamiento y prueba, con varios modos de división para
- * elegir.
- * La clase proporciona tres métodos diferentes para dividir los datos:
- * secuencial, aleatorio e intercalado.
- * También permite personalizar el tamaño del conjunto de entrenamiento mediante
- * un parámetro de porcentaje.
+ * Utility class responsible for splitting the provided dataset into training
+ * and testing sets.
+ * It provides different modes for data splitting: sequential, random, and
+ * intercalated.
+ * 
+ * @see SplitDataResult
  */
-public class SplitingData {
+public class DataSplitter {
 
     private float[] independentlyX, dependentlyY;
     private float trainPercent;
@@ -27,28 +27,22 @@ public class SplitingData {
      * @param trainPercent   Porcentaje de datos que se utilizarán para el
      *                       entrenamiento (entre 0 y 1).
      */
-    public SplitingData(float[] independentlyX, float[] dependentlyY, float trainPercent) {
+    public DataSplitter(float[] independentlyX, float[] dependentlyY, float trainPercent) {
         this.independentlyX = independentlyX;
         this.dependentlyY = dependentlyY;
         this.trainPercent = trainPercent;
     }
 
     /**
-     * Divide el conjunto de datos en conjuntos de entrenamiento y prueba según el
-     * modo seleccionado.
+     * Splits the dataset into training and testing sets based on the selected mode.
      * 
-     * @param mode Un número entero que representa el modo de división:
-     *             0 - División secuencial
-     *             1 - División aleatoria
-     *             2 - División intercalada
-     * @return Un objeto `splitedData` que contiene tanto los datos de entrenamiento
-     *         como los de prueba para las variables independientes y dependientes.
-     * @throws IllegalArgumentException Si las longitudes de los arrays de variables
-     *                                  independientes y dependientes no coinciden,
-     *                                  o si el modo es inválido.
+     * @param mode The splitting mode (0: Sequential, 1: Random, 2: Intercalated).
+     * @return An object of type SplittedData containing the training and testing
+     *         data.
+     * @throws IllegalArgumentException If the arrays have different lengths or if
+     *                                  an invalid mode is selected.
      */
-
-    public SplittedData split(int mode) {
+    public SplitDataResult split(int mode) {
         if (trainPercent > 1 || trainPercent < 0)
             throw new IllegalArgumentException("Train percentage must be between 0 and 1.");
 
@@ -70,18 +64,16 @@ public class SplitingData {
     }
 
     /**
-     * Realiza una división secuencial de los datos.
-     * La primera porción de los datos se usa para el entrenamiento y el resto para
-     * las pruebas.
+     * Splits the dataset sequentially, using the first portion for training and the
+     * remainder for testing.
      * 
-     * @param range El número de elementos que se usarán para el entrenamiento.
-     * @return Un objeto `splitedData` que contiene los conjuntos de entrenamiento y
-     *         prueba de manera secuencial.
+     * @param range The number of elements to use for training.
+     * @return An object of type SplittedData containing the sequential training and
+     *         testing data.
      */
+    private SplitDataResult secuential(int range) {
 
-    private SplittedData secuential(int range) {
-
-        SplittedData splitedData = new SplittedData();
+        SplitDataResult splitedData = new SplitDataResult();
         float[] independent = new float[range];
         float[] dependent = new float[range];
 
@@ -102,17 +94,15 @@ public class SplitingData {
     }
 
     /**
-     * Realiza una división aleatoria de los datos.
-     * Selecciona aleatoriamente índices para los conjuntos de entrenamiento y
-     * prueba.
+     * Splits the dataset randomly, selecting random indices for the training and
+     * testing data.
      * 
-     * @param range El número de elementos que se usarán para el entrenamiento.
-     * @return Un objeto `splitedData` que contiene los conjuntos de entrenamiento y
-     *         prueba divididos aleatoriamente.
+     * @param range The number of elements to use for training.
+     * @return An object of type SplittedData containing the randomly split training
+     *         and testing data.
      */
-
-    private SplittedData random(int range) {
-        SplittedData splitedData = new SplittedData();
+    private SplitDataResult random(int range) {
+        SplitDataResult splitedData = new SplitDataResult();
         Random rand = new Random();
         HashSet<Integer> selectedSet = new HashSet<>();
         int testIndex = 0, trainingIndex = 0;
@@ -148,17 +138,15 @@ public class SplitingData {
     }
 
     /**
-     * Realiza una división intercalada de los datos.
-     * La división alterna entre los datos de entrenamiento y prueba según un
-     * intervalo.
+     * Splits the dataset in an intercalated manner, alternating between training
+     * and testing data.
      * 
-     * @param range El número de elementos que se usarán para el entrenamiento.
-     * @return Un objeto `splitedData` que contiene los conjuntos de entrenamiento y
-     *         prueba de manera intercalada.
+     * @param range The number of elements to use for training.
+     * @return An object of type SplittedData containing the intercalated training
+     *         and testing data.
      */
-
-    private SplittedData splitIntercalated(int range) {
-        SplittedData splitedData = new SplittedData();
+    private SplitDataResult splitIntercalated(int range) {
+        SplitDataResult splitedData = new SplitDataResult();
         HashSet<Integer> selectedSet = new HashSet<>();
         int testIndex = 0, trainingIndex = 0;
         float[] selecteIndependentlydTestData = new float[range];

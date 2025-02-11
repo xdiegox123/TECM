@@ -1,48 +1,53 @@
 package src.interfaces.examples;
 
-import src.core.utils.TestData;
+import src.core.utils.dtos.RegressionParams;
+import src.core.utils.dtos.TestData;
 
 /**
- * Interfaz que define los métodos para una implementación de regresión.
- * Esta interfaz incluye métodos para el entrenamiento, obtención de parámetros,
- * hiperparámetros y la predicción en un modelo de regresión.
+ * Interfaz que define los métodos necesarios para implementar un modelo de
+ * regresión.
+ * Incluye métodos para entrenar el modelo, obtener los parámetros, y realizar
+ * predicciones.
+ * 
+ * @see TestData
+ * @see RegressionParams
  */
 public interface Regresions {
 
-    /**
-     * Método para entrenar el modelo de regresión.
-     * Este método debe implementar el proceso de entrenamiento que ajusta los parámetros
-     * del modelo utilizando un conjunto de datos de entrenamiento.
-     * 
-     * @return Un arreglo de números flotantes con los resultados del entrenamiento.
-     */
-    public TestData training(int splitingMode, float segmentationPercent);
+  /**
+   * Entrena el modelo de regresión utilizando los datos de entrada y un modo de
+   * división.
+   * Divide los datos en conjuntos de entrenamiento y prueba y entrena el modelo
+   * con los datos de entrenamiento.
+   * 
+   * @param splitingMode        Modo de división de los datos (por ejemplo,
+   *                            entrenamiento y prueba).
+   * @param segmentationPercent Porcentaje de los datos que se utilizarán para
+   *                            entrenamiento.
+   * @return Un objeto {@link TestData} con los datos de prueba.
+   */
+  public TestData training(int splitingMode, float segmentationPercent);
 
-    /**
-     * Método para obtener los parámetros del modelo de regresión.
-     * Este método debe devolver los parámetros actuales del modelo después de que se haya entrenado.
-     * 
-     * @return Un arreglo de números flotantes que representa los parámetros del modelo.
-     */
-    public float[] getParameters();
+  /**
+   * Obtiene los parámetros del modelo (intercepto y pendiente) junto con el
+   * coeficiente de determinación (R²)
+   * y el coeficiente de correlación de Pearson (R).
+   * 
+   * @return Un objeto {@link RegressionParams} con los parámetros calculados del
+   *         modelo.
+   * @throws IllegalStateException Si no se ha ejecutado previamente el método
+   *                               {@link #training}.
+   */
+  public RegressionParams getParameters();
 
-     /**
-     * Método para obtener los hiperparámetros del modelo de regresión.
-     * Este método debe devolver los valores de los hiperparámetros utilizados en el modelo,
-     * que son configuraciones previas al entrenamiento del modelo.
-     * 
-     * @return Un arreglo de números flotantes que representa los hiperparámetros del modelo.
-     */
-    public float[] getHyperParameters();
+  /**
+   * Realiza predicciones para un conjunto de valores de entrada utilizando el
+   * modelo entrenado.
+   * 
+   * @param inputValues Valores de la variable independiente (X) para predecir la
+   *                    variable dependiente (Y).
+   * @return Un arreglo de valores predichos de la variable dependiente (Y).
+   */
+  public float[] prediction(float[] inputValues);
 
-     /**
-     * Método para realizar una predicción con el modelo de regresión.
-     * Este método debe utilizar los datos de entrada para generar una predicción utilizando el modelo entrenado.
-     * 
-     * @param x Un arreglo de números flotantes que representa las características de entrada para la predicción.
-     * @param y Un arreglo de números flotantes que representa las etiquetas o valores correspondientes a las características de entrada.
-     * @return Un arreglo de números flotantes que contiene las predicciones generadas por el modelo para los datos de entrada.
-     */
-    public float[] prediction(float[] inputValues);
-    
 }

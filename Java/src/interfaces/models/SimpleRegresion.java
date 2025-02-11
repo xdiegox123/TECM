@@ -1,23 +1,36 @@
 package src.interfaces.models;
 
 /**
- * Interfaz para la regresión simple.
- * Esta interfaz define el método necesario para calcular los parámetros
- * de una regresión simple dada una serie de datos de entrada.
+ * Interfaz para la regresión lineal simple.
+ * Define los métodos para calcular los parámetros de una regresión simple dados
+ * los datos de entrada.
+ * 
+ * @see #computeRegression(float[], float[])
  */
 public interface SimpleRegresion {
 
-    /**
-     * Método para calcular los parámetros de la regresión simple.
-     * Este método toma dos arreglos de números flotantes, `x` y `y`, que representan
-     * las variables independientes y dependientes, respectivamente, y devuelve un arreglo
-     * con los resultados de la regresión simple (como la pendiente y la intersección).
-     *
-     * @param x Un arreglo de números flotantes que representa las variables independientes (entradas).
-     * @param y Un arreglo de números flotantes que representa las variables dependientes (salidas).
-     * @return Un arreglo de números flotantes que contiene los resultados de la regresión simple (pendiente y la intersección).
-     */
-    public float[] computeRegression(float[] x, float[] y);
+  /**
+   * Calcula los parámetros de la regresión lineal simple (intercepto y
+   * pendiente).
+   * Utiliza el método de mínimos cuadrados para encontrar la recta de mejor
+   * ajuste.
+   * 
+   * @param x Arreglo de valores de la variable independiente (X).
+   * @param y Arreglo de valores de la variable dependiente (Y).
+   * @return Un arreglo con los parámetros de la regresión: [b0, b1].
+   * @throws IllegalArgumentException Si los arreglos `x` o `y` son nulos o tienen
+   *                                  longitudes diferentes.
+   */
+  public float[] computeRegression(float[] x, float[] y);
 
-    public float[] getRegressionComponents();
+  /**
+   * Obtiene los componentes intermedios utilizados en el cálculo de la regresión
+   * lineal.
+   * Devuelve las sumas y productos que son fundamentales para obtener los
+   * parámetros de la regresión.
+   * 
+   * @return Un arreglo con los componentes intermedios: [sumX, sumY, sumXY,
+   *         sumXSquare].
+   */
+  public float[] getRegressionComponents();
 }

@@ -1,0 +1,86 @@
+@startuml SimpleLinearRegression
+
+package "src.core.models.linear" {
+    class SimpleLinearRegression {
+        + float[] computeRegression(float[] x, float[] y)
+        + float[] getRegressionComponents()
+    }
+}
+
+package "src.core.metrics" {
+    class PearsonCorrelationCoefficient {
+        + float calculatePearson(float[] x, float[] y)
+    }
+
+    class R2CoefficientOfDetermination {
+        + float calculate(float[] y, float[] y_pred, float y_mean)
+    }
+}
+
+package "src.core.utils" {
+    class DataSplitter {
+        + SplittedData split(int mode)
+        - SplittedData secuential(int range)
+        - SplittedData random(int range)
+        - SplittedData splitIntercalated(int range)
+    }
+}
+
+package "src.core.utils.dtos" {
+    class RegressionParams {
+        + float getbZero()
+        + void setbZero(float bZero)
+        + float getbOne()
+        + void setbOne(float bOne)
+        + float getCof()
+        + void setCof(float cof)
+        + float getCod()
+        + void setCod(float cod)
+    }
+
+    class SplittedData {
+        + float[] getTrainIndependentlyX()
+        + void setTrainIndependentlyX(float[] trainIndependentlyX)
+        + float[] getTrainDependentlyY()
+        + void setTrainDependentlyY(float[] trainDependentlyY)
+        + float[] getTestIndependentlyX()
+        + void setTestIndependentlyX(float[] testIndependentlyX)
+        + float[] getTestDependentlyY()
+        + void setTestDependentlyY(float[] testDependentlyY)
+    }
+
+    class TestData {
+        + float[] getTestIndependentlyX()
+        + void setTestIndependentlyX(float[] testIndependentlyX)
+        + float[] getTestDependentlyY()
+        + void setTestDependentlyY(float[] testDependentlyY)
+    }
+}
+
+package "src.interfaces.metrics" {
+    interface coefficentCorrelation {
+        + float calculatePearson(float[] x, float[] y)
+    }
+
+    interface coefficientDetermination {
+        + float calculate(float[] y, float[] y_pred, float y_mean)
+    }
+}
+
+package "src.interfaces.models" {
+    interface SimpleRegresion {
+        + float[] computeRegression(float[] x, float[] y)
+        + float[] getRegressionComponents()
+    }
+}
+
+SimpleLinearRegression ..|> SimpleRegresion
+PearsonCorrelationCoefficient ..|> coefficentCorrelation
+R2CoefficientOfDetermination ..|> coefficientDetermination
+DataSplitter --> SplittedData
+DataSplitter --> RegressionParams
+SimpleLinearRegression --> PearsonCorrelationCoefficient
+SimpleLinearRegression --> R2CoefficientOfDetermination
+SimpleLinearRegression --> RegressionParams
+
+@enduml

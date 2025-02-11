@@ -1,6 +1,6 @@
 package src;
 
-import src.core.utils.TestData;
+import src.core.utils.dtos.TestData;
 import src.examples.SLR;
 
 public class Main {
@@ -21,14 +21,14 @@ public class Main {
                 TestData testSLRandData = simpleRegresionRandom.training(1, 0.3f);
                 TestData testSLRInterData = simpleRegresionIntercalate.training(2, 0.3f);
 
-                float bestCoefficent = Math.max(simpleRegresionSecuential.getHyperParameters()[1],
-                                Math.max(simpleRegresionRandom.getHyperParameters()[1],
-                                                simpleRegresionIntercalate.getHyperParameters()[1]));
-                if (bestCoefficent == simpleRegresionIntercalate.getHyperParameters()[1]) {
+                float bestCoefficent = Math.max(simpleRegresionSecuential.getParameters().getCod(),
+                                Math.max(simpleRegresionRandom.getParameters().getCod(),
+                                                simpleRegresionIntercalate.getParameters().getCod()));
+                if (bestCoefficent == simpleRegresionIntercalate.getParameters().getCod()) {
                         printPredictions(simpleRegresionIntercalate, testSLRInterData, "dataset intercalados");
-                } else if (bestCoefficent == simpleRegresionRandom.getHyperParameters()[1]) {
+                } else if (bestCoefficent == simpleRegresionRandom.getParameters().getCod()) {
                         printPredictions(simpleRegresionRandom, testSLRandData, "dataset Random");
-                } else if (bestCoefficent == simpleRegresionSecuential.getHyperParameters()[1]) {
+                } else if (bestCoefficent == simpleRegresionSecuential.getParameters().getCod()) {
                         printPredictions(simpleRegresionSecuential, testSLRSecData, "dataset Secuencial");
                 } else {
                         System.out.println("Error al encontrar el mejor modelo.");
@@ -44,10 +44,10 @@ public class Main {
                         System.out.println((i + 1) + ") x = " + testData.getTestIndependentlyX()[i] + ": Real = "
                                         + testData.getTestDependentlyY()[i] + ", predicción = " + predictions[i]);
                 }
-                System.out.println("Parametros beta: B0 = " + model.getParameters()[0] + " B1 = "
-                                + model.getParameters()[1]);
-                System.out.println("Correlación: " + model.getHyperParameters()[0]);
-                System.out.println("Coeficiente de Determinación: " + model.getHyperParameters()[1]);
+                System.out.println("Parametros beta: B0 = " + model.getParameters().getbZero() + " B1 = "
+                                + model.getParameters().getbOne());
+                System.out.println("Correlación: " + model.getParameters().getCof());
+                System.out.println("Coeficiente de Determinación: " + model.getParameters().getCod());
                 System.out.println("");
 
         }
