@@ -7,7 +7,7 @@ package src.interfaces.models;
  * 
  * @see #computeRegression(float[], float[])
  */
-public interface SimpleRegresion {
+public interface Regressor {
 
   /**
    * Calcula los parámetros de la regresión lineal simple (intercepto y
@@ -21,16 +21,6 @@ public interface SimpleRegresion {
    * @throws IllegalArgumentException Si los arreglos `x` o `y` son nulos o tienen
    *                                  longitudes diferentes.
    */
-  public float[] computeRegression(float[] x, float[] y);
+  public float[] computeRegression(float[] y, float[]... x);
 
-  /**
-   * Obtiene los componentes intermedios utilizados en el cálculo de la regresión
-   * lineal.
-   * Devuelve las sumas y productos que son fundamentales para obtener los
-   * parámetros de la regresión.
-   * 
-   * @return Un arreglo con los componentes intermedios: [sumX, sumY, sumXY,
-   *         sumXSquare].
-   */
-  public float[] getRegressionComponents();
 }

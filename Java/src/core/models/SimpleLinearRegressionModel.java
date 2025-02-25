@@ -1,6 +1,6 @@
-package src.core.models.lienear;
+package src.core.models;
 
-import src.interfaces.models.SimpleRegresion;
+import src.interfaces.models.Regressor;
 
 /**
  * This class implements the `SimpleRegresion` interface and provides
@@ -10,9 +10,7 @@ import src.interfaces.models.SimpleRegresion;
  * 
  * @see SimpleRegresion
  */
-public class SimpleLinearRegresion implements SimpleRegresion {
-
-    private float sumX = 0.0f, sumY = 0.0f, sumXY = 0.0f, sumXSquare = 0.0f;
+public class SimpleLinearRegressionModel implements Regressor {
 
     /**
      * Computes the coefficients for the simple linear regression model (b0 and b1).
@@ -24,36 +22,28 @@ public class SimpleLinearRegresion implements SimpleRegresion {
      *                                  different lengths.
      */
     @Override
-    public float[] computeRegression(float[] x, float[] y) {
-
+    public float[] computeRegression(float[] y, float[]... x) {
         if (x == null || y == null)
             throw new IllegalArgumentException("Both arrays must not be null.");
-        if (x.length != y.length)
+        if (x.length == 1 && x[0].length != y.length)
             throw new IllegalArgumentException("Both arrays must have the same length.");
+        if (x.length > 1)
+            throw new IllegalArgumentException("Please select a multiple regression, not a simple one.");
 
-        int n = x.length;
-        float b0 = 0.0f, b1 = 0.0f;
+        float sumY = 0.0f, sumX = 0.0f, sumXY = 0.0f, sumXSquare = 0.0f;
+        float[] xData = x[0];
+        int n = xData.length;
 
         for (int i = 0; i < n; i++) {
             sumY += y[i];
-            sumXSquare += x[i] * x[i];
-            sumXY += x[i] * y[i];
-            sumX += x[i];
+            sumXSquare += xData[i] * xData[i];
+            sumXY += xData[i] * y[i];
+            sumX += xData[i];
         }
+        float b1 = ((n * sumXY) - sumX * sumY) / ((n * sumXSquare) - sumX * sumX);
+        float b0 = (sumY - b1 * sumX) / n;
 
-        b1 = ((n * sumXY) - sumX * sumY) / ((n * sumXSquare) - sumX * sumX);
-        b0 = (sumY - b1 * sumX) / n;
         return new float[] { b0, b1 };
     }
 
-    /**
-     * Retrieves the computed regression components, such as sumX, sumY, sumXY, and
-     * sumXSquare.
-     * 
-     * @return An array containing the regression components.
-     */
-    @Override
-    public float[] getRegressionComponents() {
-        return new float[] { sumX, sumY, sumXY, sumXSquare };
-    }
 }

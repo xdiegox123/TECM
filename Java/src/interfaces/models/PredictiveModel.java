@@ -1,4 +1,4 @@
-package src.interfaces.examples;
+package src.interfaces.models;
 
 import src.core.utils.dtos.RegressionParams;
 import src.core.utils.dtos.TestData;
@@ -12,7 +12,7 @@ import src.core.utils.dtos.TestData;
  * @see TestData
  * @see RegressionParams
  */
-public interface Regresions {
+public interface PredictiveModel {
 
   /**
    * Entrena el modelo de regresión utilizando los datos de entrada y un modo de
@@ -24,9 +24,17 @@ public interface Regresions {
    *                            entrenamiento y prueba).
    * @param segmentationPercent Porcentaje de los datos que se utilizarán para
    *                            entrenamiento.
+   * @param selectModel         El modelo de regresión a utilizar:
+   *                            <ul>
+   *                            <li>1 -> Linear Básico: Regresión lineal simple
+   *                            (SLR).</li>
+   *                            <li>2 -> MultipleOrPolynomialModel: Regresión de
+   *                            mínimos cuadrados con múltiples variables o modelo
+   *                            polinomial.</li>
+   *                            </ul>
    * @return Un objeto {@link TestData} con los datos de prueba.
    */
-  public TestData training(int splitingMode, float segmentationPercent);
+  public TestData training(int splitingMode, float segmentationPercent, int selectModel);
 
   /**
    * Obtiene los parámetros del modelo (intercepto y pendiente) junto con el
@@ -40,13 +48,14 @@ public interface Regresions {
    */
   public RegressionParams getParameters();
 
-  /**
+   /**
    * Realiza predicciones para un conjunto de valores de entrada utilizando el
    * modelo entrenado.
    * 
    * @param inputValues Valores de la variable independiente (X) para predecir la
    *                    variable dependiente (Y).
    * @return Un arreglo de valores predichos de la variable dependiente (Y).
+   * @throws IllegalStateException Si no se ha entrenado el modelo previamente.
    */
   public float[] prediction(float[] inputValues);
 

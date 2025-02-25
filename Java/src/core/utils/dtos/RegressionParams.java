@@ -8,8 +8,17 @@ package src.core.utils.dtos;
 public class RegressionParams {
     private float bZero = 0.0f;
     private float bOne = 0.0f;
+    private float[] Bn;
     private float cof;
     private float cod;
+    
+    public float[] getBn() {
+        return Bn;
+    }
+
+    public void setBn(float[] bn) {
+        Bn = bn;
+    }
 
     public float getbZero() {
         return bZero;
