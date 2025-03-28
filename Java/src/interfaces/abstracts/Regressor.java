@@ -1,4 +1,4 @@
-package src.interfaces.models;
+package src.interfaces.abstracts;
 
 /**
  * Interfaz para la regresión lineal simple.
@@ -7,8 +7,7 @@ package src.interfaces.models;
  * 
  * @see #computeRegression(float[], float[])
  */
-public interface Regressor {
-
+public abstract class Regressor {
   /**
    * Calcula los parámetros de la regresión lineal simple (intercepto y
    * pendiente).
@@ -21,6 +20,20 @@ public interface Regressor {
    * @throws IllegalArgumentException Si los arreglos `x` o `y` son nulos o tienen
    *                                  longitudes diferentes.
    */
-  public float[] computeRegression(float[] y, float[]... x);
+
+  // Multiple
+  public float[] computeRegression(float[] y, float[]... x) {
+    return null;
+  }
+
+  // Polinomial
+  public float[] computeRegression(int degree, float[] y, float[]... x) {
+    return null;
+  }
+
+  // Simple
+  public float[] computeRegression(float[] y, float[] x) {
+    return null;
+  }
 
 }

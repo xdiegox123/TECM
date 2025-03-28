@@ -1,7 +1,7 @@
 package src.core.models;
-import src.interfaces.models.Regressor;
+import src.interfaces.abstracts.Regressor;
 
-public class MultiLinearRegressionModel implements Regressor {
+public class MultiLinearRegressionModel extends Regressor {
 
     @Override
     public float[] computeRegression(float[] y, float[]... x) {

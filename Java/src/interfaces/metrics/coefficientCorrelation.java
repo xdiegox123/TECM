@@ -6,7 +6,7 @@ package src.interfaces.metrics;
  * 
  * @see #calculatePearson(float[], float[])
  */
-public interface coefficentCorrelation {
+public interface coefficientCorrelation {
 
     /**
      * Calcula el coeficiente de correlación de Pearson entre dos arreglos de datos.

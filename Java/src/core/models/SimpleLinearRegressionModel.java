@@ -1,16 +1,16 @@
 package src.core.models;
 
-import src.interfaces.models.Regressor;
+import src.interfaces.abstracts.Regressor;
 
 /**
- * This class implements the `SimpleRegresion` interface and provides
+ * This class implements the `SimpleRegression` interface and provides
  * functionality for performing simple linear regression.
  * It computes the regression coefficients (b0 and b1) based on the given
  * independent (x) and dependent (y) variables.
  * 
- * @see SimpleRegresion
+ * @see src.core.predictivemodels.SimpleLinearRegression
  */
-public class SimpleLinearRegressionModel implements Regressor {
+public class SimpleLinearRegressionModel extends Regressor {
 
     /**
      * Computes the coefficients for the simple linear regression model (b0 and b1).
@@ -22,23 +22,18 @@ public class SimpleLinearRegressionModel implements Regressor {
      *                                  different lengths.
      */
     @Override
-    public float[] computeRegression(float[] y, float[]... x) {
+    public float[] computeRegression(float[] y, float[] x) {
         if (x == null || y == null)
             throw new IllegalArgumentException("Both arrays must not be null.");
-        if (x.length == 1 && x[0].length != y.length)
-            throw new IllegalArgumentException("Both arrays must have the same length.");
-        if (x.length > 1)
-            throw new IllegalArgumentException("Please select a multiple regression, not a simple one.");
 
         float sumY = 0.0f, sumX = 0.0f, sumXY = 0.0f, sumXSquare = 0.0f;
-        float[] xData = x[0];
-        int n = xData.length;
+        int n = x.length;
 
         for (int i = 0; i < n; i++) {
             sumY += y[i];
-            sumXSquare += xData[i] * xData[i];
-            sumXY += xData[i] * y[i];
-            sumX += xData[i];
+            sumXSquare += x[i] * x[i];
+            sumXY += x[i] * y[i];
+            sumX += x[i];
         }
         float b1 = ((n * sumXY) - sumX * sumY) / ((n * sumXSquare) - sumX * sumX);
         float b0 = (sumY - b1 * sumX) / n;

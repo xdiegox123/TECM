@@ -2,6 +2,7 @@ package src.interfaces.models;
 
 import src.core.utils.dtos.RegressionParams;
 import src.core.utils.dtos.TestData;
+import src.interfaces.abstracts.Regressor;
 
 /**
  * Interfaz que define los métodos necesarios para implementar un modelo de
@@ -20,7 +21,7 @@ public interface PredictiveModel {
    * Divide los datos en conjuntos de entrenamiento y prueba y entrena el modelo
    * con los datos de entrenamiento.
    * 
-   * @param splitingMode        Modo de división de los datos (por ejemplo,
+   * @param splitMode        Modo de división de los datos (por ejemplo,
    *                            entrenamiento y prueba).
    * @param segmentationPercent Porcentaje de los datos que se utilizarán para
    *                            entrenamiento.
@@ -34,7 +35,7 @@ public interface PredictiveModel {
    *                            </ul>
    * @return Un objeto {@link TestData} con los datos de prueba.
    */
-  public TestData training(int splitingMode, float segmentationPercent, int selectModel);
+  public <obj extends Regressor> TestData training(int splitMode, float segmentationPercent, obj selectModel);
 
   /**
    * Obtiene los parámetros del modelo (intercepto y pendiente) junto con el
@@ -58,5 +59,7 @@ public interface PredictiveModel {
    * @throws IllegalStateException Si no se ha entrenado el modelo previamente.
    */
   public float[] prediction(float[] inputValues);
+
+  public float[] multiPredictionMultiple(float[][] inputValues);
 
 }

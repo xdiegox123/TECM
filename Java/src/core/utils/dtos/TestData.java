@@ -6,22 +6,31 @@ package src.core.utils.dtos;
  */
 public class TestData {
 
-    private float[] testIndependentlyX;
-    private float[] testDependentlyY;
+    private float[] testIndependentX;
+    private float[] testDependentY;
+    private float[][] testIndependentlyMatrixX;  // Independent variables for testing (matrix format)
 
     public float[] getTestIndependentlyX() {
-        return testIndependentlyX;
+        return testIndependentX;
     }
 
     public void setTestIndependentlyX(float[] testIndependentlyX) {
-        this.testIndependentlyX = testIndependentlyX;
+        this.testIndependentX = testIndependentlyX;
     }
 
-    public float[] getTestDependentlyY() {
-        return testDependentlyY;
+    public float[] getTestDependentY() {
+        return testDependentY;
     }
 
-    public void setTestDependentlyY(float[] testDependentlyY) {
-        this.testDependentlyY = testDependentlyY;
+    public void setTestDependentY(float[] testDependentlyY) {
+        this.testDependentY = testDependentlyY;
+    }
+
+    public float[][] getTestIndependentlyMatrixX() {
+        return testIndependentlyMatrixX;
+    }
+
+    public void setTestIndependentlyMatrixX(float[][] testIndependentlyMatrixX) {
+        this.testIndependentlyMatrixX = testIndependentlyMatrixX;
     }
 }

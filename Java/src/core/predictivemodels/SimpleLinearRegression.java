@@ -1,38 +1,39 @@
 package src.core.predictivemodels;
 
-import src.core.metrics.CoefficentOfCorrelation;
+import src.core.metrics.MeanSquaredError;
+import src.core.metrics.coefficientOfCorrelation;
 import src.core.metrics.CoefficientOfDetermination;
 import src.core.models.SimpleLinearRegressionModel;
 import src.core.utils.DataSplitter;
 import src.core.utils.dtos.RegressionParams;
-import src.core.utils.dtos.SplitDataResult;
+import src.core.utils.dtos.SplitData;
 import src.core.utils.dtos.TestData;
+import src.interfaces.abstracts.Regressor;
 import src.interfaces.models.PredictiveModel;
 
 /**
- * Implements a simple linear regression (SLR) model.
+ * Implements a Simple Linear Regression (SLR) model.
  * This class trains a simple linear regression model using provided data,
  * computes the model parameters (intercept and slope), and makes predictions
  * for new data.
- * 
- * @see SimpleLinearRegresion
+ *
+ * @see SimpleLinearRegressionModel
  */
 public class SimpleLinearRegression implements PredictiveModel {
 
-    private float[] independentlyX;
-    private float[] dependentlyY;
-    private RegressionParams SlrParams = new RegressionParams();
-    private SimpleLinearRegressionModel slr = new SimpleLinearRegressionModel();
+    private final float[] independentX;
+    private final float[] dependentY;
+    private final RegressionParams slrParams = new RegressionParams();
 
     /**
      * Constructor to initialize SLR with independent (X) and dependent (Y) data.
-     * 
-     * @param independentlyX Array of independent variable values (X).
-     * @param dependently    Array of dependent variable values (Y).
+     *
+     * @param independentX Array of independent variable values (X).
+     * @param dependentY   Array of dependent variable values (Y).
      */
-    public SimpleLinearRegression(float[] independentlyX, float[] dependently) {
-        this.independentlyX = independentlyX;
-        this.dependentlyY = dependently;
+    public SimpleLinearRegression(float[] independentX, float[] dependentY) {
+        this.independentX = independentX;
+        this.dependentY = dependentY;
     }
 
     /**
@@ -42,58 +43,56 @@ public class SimpleLinearRegression implements PredictiveModel {
      * The data is split into training and testing sets based on the provided
      * segmentation percentage and splitting mode.
      * </p>
-     * 
-     * @param splitingMode        Mode for splitting data: 0 = sequential, 1 =
-     *                            random, 2 = intercalated.
+     *
+     * @param splittingMode       Mode for splitting data: 0 = sequential, 1 =
+     *                            random, 2 = intercalate.
      * @param segmentationPercent Percentage of data used for training (between 0
      *                            and 1).
-     * @param selectModel         The regression model to use:
+     * @param model               The regression model to use:
      *                            <ul>
-     *                            <li>1 -> Linear Regression (Simple Linear
-     *                            Regression).</li>
+     *                            <li>1 -> Simple Linear Regression.</li>
      *                            <li>2 -> Multiple or Polynomial Regression (Least
      *                            Squares Regression).</li>
      *                            </ul>
      * @return The test data containing the independent (X) and dependent (Y) test
-     *         values.
+     * values.
      * @throws IllegalArgumentException If input data is invalid or if an invalid
      *                                  model selection is provided.
-     * 
      * @see DataSplitter
      */
     @Override
-    public TestData training(int splitingMode, float segmentationPercent, int selectModel) {
-        if (selectModel != 1 && selectModel != 2) {
-            throw new IllegalArgumentException("Invalid model selection. Use 1 for Linear Regression or 2 for Multiple/Polynomial Regression.");
-        }
-        DataSplitter splitterData = new DataSplitter(independentlyX, dependentlyY, segmentationPercent);
-        CoefficentOfCorrelation cof = new CoefficentOfCorrelation();
+    public TestData training(int splittingMode, float segmentationPercent, Regressor model) {
+        DataSplitter dataSplitter = new DataSplitter(dependentY, segmentationPercent, independentX);
+        MeanSquaredError mse = new MeanSquaredError();
         CoefficientOfDetermination cod = new CoefficientOfDetermination();
         TestData testData = new TestData();
-        float[] predictedValues = new float[dependentlyY.length];
-        float y_mean = 0.0f;
+        float[] predictedValues = new float[dependentY.length];
+        float yMean = 0.0f;
 
-        // SPLITING DATA
-        SplitDataResult splitedData = splitterData.split(splitingMode);
-        testData.setTestDependentlyY(splitedData.getTestDependentlyY());
-        testData.setTestIndependentlyX(splitedData.getTestIndependentlyX());
+        // SPLIT DATA
+        SplitData splitData = dataSplitter.split(splittingMode);
+        testData.setTestDependentY(splitData.getTestDependentlyY());
+        testData.setTestIndependentlyX(splitData.getTestIndependentlyX());
 
         // SIMPLE LINEAR REGRESSION
-        float[] modelResult = slr.computeRegression(splitedData.getTrainIndependentlyX(),
-                splitedData.getTrainDependentlyY());
-        SlrParams.setbZero(modelResult[0]);
-        SlrParams.setbOne(modelResult[1]);
+        float[] modelResult = model.computeRegression(splitData.getTrainDependentlyY(), splitData.getTrainIndependentlyX());
+        slrParams.setbZero(modelResult[0]);
+        slrParams.setbOne(modelResult[1]);
 
-        // CORRELATION COEFFICENT AND DETERMINATION
-        for (int i = 0; i < dependentlyY.length; i++) {
-            predictedValues[i] = (SlrParams.getbZero() + (SlrParams.getbOne() * independentlyX[i]));
+        // CORRELATION COEFFICIENT AND DETERMINATION
+        for (int i = 0; i < dependentY.length; i++) {
+            predictedValues[i] = (slrParams.getbZero() + (slrParams.getbOne() * independentX[i]));
         }
-        for (int i = 0; i < dependentlyY.length; i++) {
-            y_mean += dependentlyY[i];
+
+        // CALCULATE MEAN OF Y
+        for (float v : dependentY) {
+            yMean += v;
         }
-        y_mean /= dependentlyY.length;
-        SlrParams.setCod(cod.calculate(dependentlyY, predictedValues, y_mean));
-        SlrParams.setCof(cof.calculatePearson(independentlyX, dependentlyY));
+        yMean /= dependentY.length;
+
+        // SET R^2 AND PEARSON COEFFICIENT
+        slrParams.setCod(cod.calculate(dependentY, predictedValues, yMean));
+        slrParams.setCof(mse.getMeanSquaredError(dependentY, predictedValues));
         return testData;
     }
 
@@ -104,22 +103,20 @@ public class SimpleLinearRegression implements PredictiveModel {
      * (R²),
      * and the Pearson correlation coefficient (R) based on the model parameters.
      * </p>
-     * 
+     *
      * @return The model parameters including intercept (b0), slope (b1), R², and
-     *         Pearson R.
+     * Pearson R.
      * @throws IllegalStateException If the 'training' method has not been called to
      *                               calculate parameters.
-     * 
-     * @see CoefficentOfCorrelation
+     * @see coefficientOfCorrelation
      * @see CoefficientOfDetermination
      */
     @Override
     public RegressionParams getParameters() {
-        if (SlrParams.getbOne() == 0.0f && SlrParams.getbZero() == 0.0f) {
-            throw new IllegalStateException(
-                    "The 'training' method must be executed first to calculate the parameters.");
+        if (slrParams.getbOne() == 0.0f && slrParams.getbZero() == 0.0f) {
+            throw new IllegalStateException("The 'training' method must be executed first to calculate the parameters.");
         }
-        return SlrParams;
+        return slrParams;
     }
 
     /**
@@ -128,22 +125,25 @@ public class SimpleLinearRegression implements PredictiveModel {
      * Each input value is predicted based on the model's parameters (intercept and
      * slope).
      * </p>
-     * 
+     *
      * @param inputValues Array of independent variable values (X) for which
      *                    predictions are needed.
      * @return Array of predicted dependent variable values (Y).
      * @throws IllegalStateException If the model parameters have not been
      *                               calculated.
-     * 
-     * @see SLR#getParameters()
+     * @see SimpleLinearRegression#getParameters()
      */
     @Override
     public float[] prediction(float[] inputValues) {
         float[] predictedValues = new float[inputValues.length];
         for (int i = 0; i < inputValues.length; i++) {
-            predictedValues[i] = (SlrParams.getbZero() + (SlrParams.getbOne() * inputValues[i]));
+            predictedValues[i] = (slrParams.getbZero() + (slrParams.getbOne() * inputValues[i]));
         }
         return predictedValues;
     }
 
+    @Override
+    public float[] multiPredictionMultiple(float[][] inputValues) {
+        return new float[0];
+    }
 }
