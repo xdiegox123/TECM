@@ -11,29 +11,29 @@ Características Principales
 Instalación
 Requisitos Previos
 
-Instalación en tu máquina local
 
-Dependencias
+
+-Dependencias-
 El proyecto, en su estado actual, no requiere dependencias externas.
 Uso del Proyecto
-Ejecución
+-Ejecución-
 Puedes incorporar las clases del proyecto en tu propia aplicación Java o utilizar los ejemplos prácticos disponibles en la carpeta .
 Funcionalidades Disponibles
 
-Ejemplos Prácticos
+-Ejemplos Prácticos-
 Revisa la carpeta  para encontrar casos prácticos que te ayudarán a entender cómo usar las funcionalidades del proyecto.
 Cómo Contribuir
 Proceso de Contribución
 Este proyecto es público, por lo que puedes contribuir creando un pull request en GitHub. Asegúrate de estructurar tu código de forma clara y organizada.
-Estilo de Código
+-Estilo de Código-
 Aunque no existen lineamientos estrictos de estilo, se agradecen comentarios y explicaciones claras en el código.
 Enviar Cambios
 
-Documentación
+-Documentación-
 La documentación está disponible en la carpeta , además de estar integrada como comentarios dentro del código fuente.
 Si necesitas detalles adicionales sobre una funcionalidad o clase, consulta los comentarios incluidos en los archivos.
 Pruebas
-Ejecución de Pruebas
+-Ejecución de Pruebas-
 Puedes realizar pruebas unitarias y funcionales para confirmar que todo opere de manera correcta.
 Añadir Nuevas Pruebas
 Por el momento, no existen directrices específicas para agregar pruebas, pero puedes añadirlas en .
@@ -42,5 +42,5 @@ Este proyecto se distribuye bajo la Licencia GPL-3.0, por lo que se solicita que
 Contacto
 Si tienes dudas o encuentras algún inconveniente, puedes contactarme a través del correo electrónico: Yefrasoft@hotmail.com.
 Además, puedes explorar el repositorio en GitHub: Repositorio GitHub.
-Página Web
-Se está trabajando en una página web para este proyecto, ¡pronto estará disponible!
+-Página Web-
+Se está trabajando en una página web para este proyecto.
