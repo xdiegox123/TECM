@@ -1,121 +1,46 @@
-# Técnicas de Machine Learning Multilenguaje
------------
-
-## Descripción
-
-Este proyecto tiene como objetivo desarrollar librerías propias enfocadas en técnicas de _machine learning_ en los lenguajes de programación Java, C#, Kotlin y Python. Actualmente, solo se encuentra implementado en Java.
-
-El propósito principal del proyecto es aprender y entender cómo funcionan las librerías de _machine learning_ por detrás, implementando desde cero algunas de las técnicas más comunes.
-
-## Propósito
-
-Desarrollar librerías propias para técnicas de _machine learning_ en múltiples lenguajes (Java, C#, Kotlin y Python), con el fin de educar y proporcionar herramientas útiles a aquellos que deseen aprender y trabajar con _machine learning_ a nivel técnico.
-
-## Principales Usuarios
-
-Cualquier usuario interesado en aprender más sobre las técnicas de _machine learning_ y entender cómo se implementan las librerías desde cero.
-
-Características
----------------
-
-*   Implementación de técnicas de _machine learning_ en múltiples lenguajes.
-*   Ejemplos prácticos y casos de uso en `SRC/Examples`.
-*   Primeras implementaciones incluyen:
-    *   División de datos (_Data Splitting_).
-    *   Regresión Lineal Simple (_Simple Linear Regression_).
+Técnicas Multilenguaje de Machine Learning
+Introducción
+Este proyecto busca desarrollar librerías personalizadas para implementar técnicas de machine learning en lenguajes de programación como Java, C#, Kotlin y Python. Por el momento, las implementaciones solo están disponibles en Java.
+El objetivo principal es profundizar en el funcionamiento interno de las librerías de machine learning, creando desde cero algunas de las técnicas más utilizadas, y fomentando el aprendizaje técnico de sus usuarios.
+Objetivo
+Crear librerías de machine learning en varios lenguajes de programación (Java, C#, Kotlin y Python) que sirvan como herramienta educativa para aquellos que desean entender y aplicar estas técnicas a nivel técnico.
+Público Objetivo
+Ideal para cualquier persona interesada en aprender sobre las técnicas de machine learning y descubrir cómo funcionan las librerías detrás de bambalinas.
+Características Principales
 
 Instalación
------------
+Requisitos Previos
 
-### Requisitos Previos
+Instalación en tu máquina local
 
-*   **Java**: versión 17.
-*   **Otros Lenguajes**: Por el momento, solo está implementado en Java. Las implementaciones para C#, Kotlin y Python están pendientes.
+Dependencias
+El proyecto, en su estado actual, no requiere dependencias externas.
+Uso del Proyecto
+Ejecución
+Puedes incorporar las clases del proyecto en tu propia aplicación Java o utilizar los ejemplos prácticos disponibles en la carpeta .
+Funcionalidades Disponibles
 
-### Instalación en Entorno Local
-
-1.  Clona el repositorio:
-    
-        git clone https://github.com/YefraSoft/ML-Multilingual.git
-    
-2.  Navega al directorio del proyecto:
-    
-        cd ML-Multilingual
-    
-3.  Compila y ejecuta el proyecto utilizando tu IDE favorito o usando el siguiente comando para compilar:
-    
-        javac -d bin src/*.java
-    
-
-### Dependencias Externas
-
-No se requieren dependencias externas para la ejecución del proyecto en su estado actual.
-
-Uso
----
-
-### Ejecución del Proyecto
-
-Puedes agregar las clases del proyecto a tu propio proyecto Java o utilizar los archivos de ejemplo ubicados en `SRC/Examples`.
-
-### Funcionalidades Principales
-
-*   División de datos para entrenamiento y prueba (_Data Splitting_).
-*   Regresión lineal simple (_Simple Linear Regression_).
-
-### Ejemplos
-
-Los ejemplos se encuentran en la carpeta `SRC/Examples`, donde puedes encontrar casos de uso prácticos para comprender cómo interactuar con el proyecto.
-
-Contribución
-------------
-
-### ¿Cómo contribuir?
-
-Este es un proyecto público. Si deseas contribuir, puedes hacerlo abriendo un _pull request_ en GitHub. Asegúrate de que tu código sea claro y esté bien estructurado.
-
-### Estilo de Código
-
-No hay pautas específicas para el estilo de código por el momento, pero se agradecen los comentarios estructurados y bien escritos.
-
-### Proceso para enviar cambios
-
-*   Realiza cambios y crea un _pull request_.
-*   En tu solicitud, explica claramente el cambio realizado.
+Ejemplos Prácticos
+Revisa la carpeta  para encontrar casos prácticos que te ayudarán a entender cómo usar las funcionalidades del proyecto.
+Cómo Contribuir
+Proceso de Contribución
+Este proyecto es público, por lo que puedes contribuir creando un pull request en GitHub. Asegúrate de estructurar tu código de forma clara y organizada.
+Estilo de Código
+Aunque no existen lineamientos estrictos de estilo, se agradecen comentarios y explicaciones claras en el código.
+Enviar Cambios
 
 Documentación
--------------
-
-La documentación está disponible en el código fuente en la carpeta `Java/Docs` y también está incluida en los comentarios dentro del código.
-
-Todas las clases están debidamente documentadas. Si necesitas una explicación más profunda sobre una funcionalidad o clase específica, revisa los comentarios dentro de cada archivo de código.
-
+La documentación está disponible en la carpeta , además de estar integrada como comentarios dentro del código fuente.
+Si necesitas detalles adicionales sobre una funcionalidad o clase, consulta los comentarios incluidos en los archivos.
 Pruebas
--------
-
-### Ejecución de Pruebas
-
-Puedes ejecutar pruebas unitarias y de funcionamiento para verificar que el proyecto esté funcionando correctamente.
-
-### Instrucciones para modificar o agregar pruebas
-
-Por el momento, no hay instrucciones específicas para agregar nuevas pruebas. Puedes añadir nuevas pruebas en la carpeta correspondiente dentro de `src/test`.
-
+Ejecución de Pruebas
+Puedes realizar pruebas unitarias y funcionales para confirmar que todo opere de manera correcta.
+Añadir Nuevas Pruebas
+Por el momento, no existen directrices específicas para agregar pruebas, pero puedes añadirlas en .
 Licencia
---------
-
-Este proyecto se distribuye bajo la Licencia **GPL-3.0**.
-
-Los usuarios deberán referenciar este repositorio al usar o modificar el código en cualquier otro proyecto.
-
+Este proyecto se distribuye bajo la Licencia GPL-3.0, por lo que se solicita que menciones este repositorio si utilizas o modificas el código en otros proyectos.
 Contacto
---------
-
-Si tienes preguntas o problemas, no dudes en contactarme a través del siguiente correo: **Yefrasoft@hotmail.com**
-
-También puedes consultar el repositorio en GitHub: [Repositorio GitHub](https://github.com/YefraSoft)
-
+Si tienes dudas o encuentras algún inconveniente, puedes contactarme a través del correo electrónico: Yefrasoft@hotmail.com.
+Además, puedes explorar el repositorio en GitHub: Repositorio GitHub.
 Página Web
-----------
-
-La página web del proyecto está en progreso. ¡Próximamente estará disponible!
+Se está trabajando en una página web para este proyecto, ¡pronto estará disponible!
