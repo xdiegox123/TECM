@@ -40,7 +40,7 @@ Por el momento, no existen directrices específicas para agregar pruebas, pero p
 Licencia
 Este proyecto se distribuye bajo la Licencia GPL-3.0, por lo que se solicita que menciones este repositorio si utilizas o modificas el código en otros proyectos.
 Contacto
-Si tienes dudas o encuentras algún inconveniente, puedes contactarme a través del correo electrónico: Yefrasoft@hotmail.com.
+Si tienes dudas o encuentras algún inconveniente, puedes contactarme a través del correo electrónico: diegolopezsev@gmail.com
 Además, puedes explorar el repositorio en GitHub: Repositorio GitHub.
 -Página Web-
 Se está trabajando en una página web para este proyecto.
